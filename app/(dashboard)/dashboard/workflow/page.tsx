@@ -81,7 +81,7 @@ export default function Workflow() {
                                 type="text"
                                 value={habit}
                                 onChange={(e) => setStory(e.target.value)}
-                                placeholder="E.g., Tell me a habit about a magical forest..."
+                                placeholder="E.g., Let's Fix a Bad Habit Today ..."
                                 className="w-full p-4 rounded-lg bg-white/50 border border-purple-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent shadow-inner"
                             />
                         </div>
