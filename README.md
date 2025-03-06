@@ -71,7 +71,6 @@ The **AI Tutor API Subscription Starter** is your complete starting point to bui
 
    ```
 
-
 ## Configuration & Setup
 
 ### Stripe Setup
@@ -93,20 +92,20 @@ The available tiers are defined in **lib/tiers.ts**:
   - Price: `null` (no payment required)
   - Description: For individuals who need to track their work.
   - Message Limit: **5 messages per month**
-  - `productId`: *empty* (indicates the free plan)
-  
+  - `productId`: _empty_ (indicates the free plan)
 - **Starter:**
+
   - Price: `$10/month`
   - Description: For small teams with basic collaboration needs.
   - Message Limit: **100 messages per month**
-  - `productId`: *Set to your Starter tier Stripe product ID*
+  - `productId`: _Set to your Starter tier Stripe product ID_
 
 - **Pro:**
   - Price: `$30/month`
   - Description: For large teams needing advanced features.
   - Message Limit: **Unlimited** (represented as `-1`)
-  - `productId`: *Set to your Pro tier Stripe product ID*
-  
+  - `productId`: _Set to your Pro tier Stripe product ID_
+
 **How Message Limits are Enforced:**
 
 - When a workflow runs, the API route (e.g., `/api/run/route.ts`) checks the current team's message count:
@@ -117,20 +116,21 @@ The available tiers are defined in **lib/tiers.ts**:
 ## Workflow and Chatbot Integration
 
 ### Workflow Page
+
 The workflow page provides an interface for users to interact with AI Tutor API workflows:
 
-- **Input Submission**: Users can enter prompts (e.g., "Tell me a story about a magical forest") and generate AI-powered responses.
-  
+- **Input Submission**: Users can enter prompts (e.g., "Tell me a habit about a magical forest") and generate AI-powered responses.
 - **Message Limit Enforcement**: When a workflow is executed, the backend checks the team's message limit. If the limit is reached (e.g., for free users, 5 messages per month), the workflow is blocked and an error is returned.
 
-- **Workflow History**: 
+- **Workflow History**:
   - All workflow interactions are automatically saved to the database
   - Users can access their workflow history by clicking the history icon in the input field
   - The history drawer displays past prompts and their results, sorted by most recent
   - Clicking on any history item will restore both the input prompt and the generated output
   - History is shared among team members, allowing for collaborative work
-  
+
 ### Chatbot Page
+
 Build and test chatbots created with AI Tutor API as part of your SaaS application:
 
 - **Embedded Chatbots**: Easily embed chatbots created with AI Tutor API
@@ -143,7 +143,8 @@ The chatbot page can be enhanced with a message history feature similar to the w
 
 #### Implementation Guide
 
-1. **Database Schema**: 
+1. **Database Schema**:
+
    - The existing `workflow_history` table can be used as a model
    - Create a `chat_history` table with fields for:
      - `id`: Unique identifier
@@ -154,6 +155,7 @@ The chatbot page can be enhanced with a message history feature similar to the w
      - `title`: Optional auto-generated title based on conversation content
 
 2. **API Endpoints**:
+
    - Create `/api/chat/history` endpoint to fetch chat history
    - Modify the existing `/api/chat` endpoint to save conversations
    - Add an endpoint to allow users to name or categorize conversations
@@ -163,13 +165,12 @@ The chatbot page can be enhanced with a message history feature similar to the w
    - Implement a chat session selector to switch between conversations
    - Add options to continue previous conversations or start new ones
 
-
 ## Sidebar Subscription Status Display
 
 The sidebar features a dedicated component that displays:
+
 - The **Subscription Tier Badge:**  
   Displays the full tier name when expanded or just the first letter when collapsed. If no active subscription exists, "Free" is shown.
-  
 - The **Messages Left Badge:**  
   Shows “Messages: X left” (or just the number when collapsed). If the tier provides unlimited messages, it displays “Unlimited” or an infinity symbol (∞). Additionally, the badge is styled green when remaining messages are available and red when the limit is reached.
 
@@ -178,11 +179,12 @@ This display automatically updates (using a polling mechanism) to reflect usage 
 ## Database Setup & Seeding
 
 Ensure the database schema includes:
+
 - The teams table with `messageLimit` and `currentMessages` columns.
 - Correct associations for users, team members, activity logs, invitations, and messages as defined in **lib/db/schema.ts**.
-  
+
 Run the seed script using:
-  
+
 ```bash
 pnpm db:seed
 ```
@@ -192,6 +194,7 @@ This creates a default user and team, initializing the free plan appropriately.
 ## Running in Production
 
 Before deployment:
+
 - Update your environment variables accordingly.
 - Test your Stripe integration (webhooks, portal sessions, etc.).
 - Verify that your database and subscription tiers are properly configured.
